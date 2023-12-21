@@ -28,5 +28,10 @@ export default function Layout() {
   }
 
   // Render the children routes now that all the assets are loaded.
-  return <Stack />;
+  return <Stack
+    screenOptions={{
+       
+        headerLargeTitle: true,
+        }}
+  />;
 }
