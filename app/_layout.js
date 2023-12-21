@@ -4,7 +4,9 @@ import {
   // This example uses a basic Layout component, but you can use any Layout.
   Stack,
 } from 'expo-router';
-import { useFonts, Inter_500Medium } from '@expo-google-fonts/inter';
+import { useFonts, Inter_500Medium, Inter_700Bold } from '@expo-google-fonts/inter';
+import { useEffect } from 'react';
+import {COLORS} from '../constants/theme'
 
 
 SplashScreen.preventAutoHideAsync();
@@ -12,7 +14,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function Layout() {
   const [fontsLoaded, fontError] = useFonts({
-    Inter_500Medium,
+    Inter_500Medium, Inter_700Bold
   });
 
   useEffect(() => {
@@ -32,6 +34,26 @@ export default function Layout() {
     screenOptions={{
        
         headerLargeTitle: true,
+        headerLargeTitleStyle: {
+            fontFamily: 'Inter_700Bold',
+            fontSize: 30,
+            },
+        headerLargeStyle: {
+            backgroundColor: COLORS.primary,
+            
+            
+        },
+        headerTitleStyle: {
+            fontFamily: 'Inter_500Medium',
+            color: COLORS.white,
+        },
+        headerStyle: {
+            backgroundColor: 'transparent',
+
+        },
+        headerBlurEffect: 'material',
+        headerTransparent: true,
+        
         }}
   />;
 }
