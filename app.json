@@ -8,6 +8,9 @@
       "expo-router"
     ],
     "name": "expo-razorpay-integration",
-    "slug": "expo-razorpay-integration"
+    "slug": "expo-razorpay-integration",
+    "android": {
+      "package": "com.expo.razorpayintegration"
+    }
   }
 }

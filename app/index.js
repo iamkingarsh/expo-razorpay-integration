@@ -5,11 +5,43 @@ import { Stack } from 'expo-router'
 import { COLORS, FONTS, SIZES } from '../constants/theme'
 import Input from '../components/input'
 import Button from '../components/button'
+import {RAZORPAY_KEY_ID} from '@env'
+import RazorpayCheckout from 'react-native-razorpay'
 
 const home = () => {
 
   const [amount, setAmount] = useState(0);
   const [balace, setBalance] = useState(0);
+  const currency = 'INR';
+
+  const handlePayment = () => {
+    if (amount < 1) {
+      alert('Amount should be greater than 0');
+      return;
+    }
+    var options = {
+      description: 'Wallet Recharge',
+      image: 'https://dapper.designerdudes.in/wp-content/uploads/2023/11/Logo-Web-Png-for-Dark-bg.png',
+      currency: 'INR',
+      key: RAZORPAY_KEY_ID, // Your api key
+      amount: amount,
+      name: 'Dapper',
+      prefill: {
+        email: 'dapper@designerdudes.in',
+        contact: '7013396624',
+        name: 'Dapper',
+      },
+      theme: {color: COLORS.primary},
+    };
+    RazorpayCheckout.open(options).then((data) => {
+      // handle success
+      alert(`Success: ${data.razorpay_payment_id}`);
+    }).catch((error) => {
+      // handle failure
+      alert(`Error: ${error.code} | ${error.description}`);
+    });
+  }
+
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" enabled>
     <SafeAreaView
@@ -22,21 +54,7 @@ const home = () => {
       }}
       
       >
-      <Text
-        style={{
-          fontSize: SIZES.base,
-          padding: SIZES.base,
-          fontFamily: FONTS.medium,
-          color: COLORS.lightGray4,
-        }}
-      >
-        Current Balance: 
-         { new Intl.NumberFormat('en-IN', {
-          style: 'currency',
-          currency: 'INR',
-        }).format(balace)
-        }
-      </Text>
+      
       <Stack.Screen
         options={{
           headerTitle: 'Reacharge Your Wallet',
@@ -57,6 +75,7 @@ const home = () => {
             color: COLORS.primary,
           }}
         >Enter Amount</Text>
+        
         <View
         >
           <View
@@ -82,7 +101,7 @@ const home = () => {
       </ScrollView>
       <View
         style={{
-          flexDirection: 'row',
+          flexDirection: 'column',
           justifyContent: 'space-between',
           alignItems: 'center',
           width: '100%',
@@ -90,9 +109,24 @@ const home = () => {
           paddingVertical: 10,
         }}
       >
-
+<Text
+        style={{
+          fontSize: SIZES.base,
+          padding: SIZES.base,
+          fontFamily: FONTS.medium,
+          color: COLORS.lightGray4,
+        }}
+      >
+        Current Balance: 
+         { new Intl.NumberFormat('en-IN', {
+          style: 'currency',
+          currency: 'INR',
+        }).format(balace)
+        }
+      </Text>
         <Button
-          onPress={() => { }}
+          
+          onPress={() => { handlePayment()}}
           style={{
             backgroundColor: COLORS.primary,
 
